@@ -8,7 +8,7 @@ from pydantic import BaseModel, Field
 
 
 router = APIRouter(
-    tags=['topics']
+    tags=['Topics']
 ) # creamnos una instancia de la clase
 
 # creamos el modelo para la validacion del los campos para la consulta post

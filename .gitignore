@@ -3,7 +3,7 @@ env
 # las variables de entorno
 .env
 # base de datos
-topics.db
+Foro.db
 # carpeta cache y archivos python compilados
 __pycache__/
 *.pyc

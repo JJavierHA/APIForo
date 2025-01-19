@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker # importamos el modulo para el uso de se
 from sqlalchemy.ext.declarative import declarative_base # importamos el modulo para interactura con la base de datos
 
 
-SQLALCHEMY_DATABASE_URL = "sqlite:///./topics.db" # creamos la ruta donde se creara la base de datos
+SQLALCHEMY_DATABASE_URL = "sqlite:///./Foro.db" # creamos la ruta donde se creara la base de datos
 
 # creamos el motor para interactura con la base de datos
 # ajustamos para poder usar multi hilos
