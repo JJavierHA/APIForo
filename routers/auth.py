@@ -35,7 +35,7 @@ db_dependency = Annotated[Session, Depends(get_db)]
 # creamos el contexto de la contrasenia segura
 bcrypt_context = CryptContext(schemes=['bcrypt'], deprecated='auto') # agregamos el contexto de encriptado el esquema que usara
 
-oauth2Bearer = OAuth2PasswordBearer(tokenUrl='/token')
+oauth2Bearer = OAuth2PasswordBearer(tokenUrl='token')
 
 # creamos la clase validadora
 class UserRequest(BaseModel):
@@ -48,8 +48,8 @@ class UserRequest(BaseModel):
 
 # establecemos el modelo que sera base para la devolucion de servidor
 class Token(BaseModel):
-    accessToken: str
-    tokenType: str
+    access_token: str
+    token_type: str
 
 def authenticateUser(username: str, password: str, db):
     user = db.query(User).filter(User.username==username).first() # estraemos el usuario si hay coincidencias
@@ -109,4 +109,4 @@ async def loginForAccessToken(dataForm: Annotated[OAuth2PasswordRequestForm, Dep
     if not user:
         raise HTTPException(status_code=401, detail="User not autenticated.")
     token = createAccessToken(user.username, user.id, timedelta(minutes=20)) # creamos un token
-    return {"accessToken": token, "tokenType": "bearer"} # seguimos la estructura del modelo de respuesta
+    return {"access_token": token, "token_type": "bearer"} # seguimos la estructura del modelo de respuesta

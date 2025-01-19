@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, Boolean # importamos lo tipos de datos
+from sqlalchemy import Column, String, Integer, Boolean, ForeignKey # importamos lo tipos de datos
 from database import base # importamos el objeto de la clase declarativa
 
 # creamos un modelo para los usuarios
@@ -24,5 +24,5 @@ class Topic(base):
     mensaje = Column(String)
     fechaCreacion = Column(Integer)
     status = Column(Boolean, default=False)
-    autor = Column(Integer)
     curso = Column(Integer)
+    owner = Column(Integer, ForeignKey("users.id"))

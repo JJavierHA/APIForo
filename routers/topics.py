@@ -5,6 +5,8 @@ from database import sesionLocal # importamos el motor de la base de datos y la 
 from sqlalchemy.orm import Session # importamos las seciones locales
 from typing import Annotated # permite inyectar dependencias 
 from pydantic import BaseModel, Field
+# importamos las clase para validar las seciones e interactuar con los topicos
+from .auth import getCurrentUser
 
 
 router = APIRouter(
@@ -17,7 +19,6 @@ class TopicRequest(BaseModel):
     mensaje: str = Field(min_length=3)
     fechaCreacion: int = Field(gt=1970 )
     status: bool
-    autor: int = Field(gt=0)
     curso: int = Field(gt=0)
 
 # creamos la dependencia para la sesion de la base de datos
@@ -30,32 +31,43 @@ def get_db():
 
 # creamo la inyeccion de dependencias
 db_dependency = Annotated[Session, Depends(get_db)] # tipo de dato, funcion de la que depende 
+user_dependency = Annotated[dict, Depends(getCurrentUser)] # creamos una dependecia que validara las sesiones de lo susuarios
 
 #! Funciones GET
 @router.get("/", status_code=status.HTTP_200_OK)
-async def returnAllTopics(db: db_dependency): # inyectamos la dependencia
-    return db.query(Topic).all()
+async def returnAllTopics(user: user_dependency, db: db_dependency): # inyectamos la dependencia
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authenticated fail.")
+    return db.query(Topic).filter(Topic.owner == user.get("id")).all()
 
 @router.get("/topic/{topicId}", status_code=status.HTTP_200_OK)
-async def returnOnlyTopic(db: db_dependency, topicId: int = Path(gt=0)): # validamos que los id sean mayor a 0
-    topic = db.query(Topic).filter(Topic.id == topicId).first()
+async def returnOnlyTopic(user: user_dependency, db: db_dependency, topicId: int = Path(gt=0)): # validamos que los id sean mayor a 0
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authenticated fail.")
+    topic = db.query(Topic).filter(Topic.id == topicId)\
+        .filter(Topic.owner == user.get('id')).first()
     if topic is not None:
         return topic
     raise HTTPException(status_code=404, detail="Topic not found.")
 
 #! Funciones POST
 @router.post("/createTopic", status_code=status.HTTP_201_CREATED)
-async def createTopic(db: db_dependency, topicRequest: TopicRequest):
-    topic = Topic(**topicRequest.model_dump()) # creamos un objeto de tipo topic
+async def createTopic(user: user_dependency, db: db_dependency, 
+                      topicRequest: TopicRequest):
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authenticated fail.")
+    topic = Topic(**topicRequest.model_dump(), owner=user.get('id') ) # creamos un objeto de tipo topic
     db.add(topic) # lo ageragamos
     db.commit() # guardamos los cambios
 
 #! Funcion PUT
 @router.put("/updateTopic/{topicId}", status_code=status.HTTP_204_NO_CONTENT)
-async def updateTopic(db: db_dependency,
-                        topicRequest: TopicRequest, 
-                        topicId: int = Path(gt=0)):
-    topic = db.query(Topic).filter(Topic.id == topicId).first()
+async def updateTopic(user: user_dependency, db: db_dependency, 
+                      topicRequest: TopicRequest, topicId: int = Path(gt=0)):
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authenticated fail.")
+    topic = db.query(Topic).filter(Topic.id == topicId)\
+        .filter(Topic.owner == user.get('id')).first()
     if topic is None:
         raise HTTPException(status_code=404, detail="Item not found")
     
@@ -63,7 +75,6 @@ async def updateTopic(db: db_dependency,
     topic.mensaje = topicRequest.mensaje
     topic.fechaCreacion = topicRequest.fechaCreacion
     topic.status = topicRequest.status
-    topic.autor = topicRequest.autor
     topic.curso = topicRequest.curso
 
     db.add(topic)
@@ -71,9 +82,13 @@ async def updateTopic(db: db_dependency,
 
 #! Funcion DELETED
 @router.delete("/deleteTopic/{topicId}", status_code=status.HTTP_204_NO_CONTENT)
-async def deleteTopic(db: db_dependency, topicId: int = Path(gt=0)):
-    topic = db.query(Topic).filter(Topic.id == topicId).first()
+async def deleteTopic(user: user_dependency, db: db_dependency, topicId: int = Path(gt=0)):
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authenticated fail.")
+    topic = db.query(Topic).filter(Topic.id == topicId)\
+        .filter(Topic.owner == user.get('id')).first()
     if topic is None:
         raise HTTPException(status_code=404, detail="Item not found")
-    db.query(Topic).filter(Topic.id == topicId).delete()
+    db.query(Topic).filter(Topic.id == topicId)\
+        .filter(Topic.owner == user.get('id')).delete()
     db.commit()
