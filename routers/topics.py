@@ -10,7 +10,7 @@ from .auth import getCurrentUser
 
 
 router = APIRouter(
-    tags=['Topics']
+    tags=['Topics'],
 ) # creamnos una instancia de la clase
 
 # creamos el modelo para la validacion del los campos para la consulta post

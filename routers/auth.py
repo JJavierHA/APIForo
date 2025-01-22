@@ -60,9 +60,9 @@ def authenticateUser(username: str, password: str, db):
     return user
 
 # creamos una funcion para crear un token jwt
-def createAccessToken(username: str, userId: int, expiresDelta: timedelta):
+def createAccessToken(username: str, userId: int, role:str, expiresDelta: timedelta):
     # asignamos los datos a convertir en el payload (carga util)
-    encode = {"sub": username, "id": userId}
+    encode = {"sub": username, "id": userId, "role":role}
     # establecemos el tiempo de vida del token comenzando desde la hora actual y sumandole el tiempo de vida que ahora este posee
     expires = datetime.now(timezone.utc) + expiresDelta
     encode.update({"exp": expires})
@@ -76,11 +76,12 @@ async def getCurrentUser(token: Annotated[str, Depends(oauth2Bearer)]): # resivi
         payload = jwt.decode(token, SECRET_KEY, algorithms=ALGORIMTH)
         username: str = payload.get('sub')
         idUser: str = payload.get('id')
+        role: str = payload.get('role')
         # validamos si existe
         if username is None or idUser is None:
             raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, 
                                 detail="User not authenticated.")
-        return {"username": username, "id": idUser }
+        return {"username": username, "id": idUser, "role":role}
     except JWTError:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, 
                                 detail="User not authnticated.")
@@ -108,5 +109,5 @@ async def loginForAccessToken(dataForm: Annotated[OAuth2PasswordRequestForm, Dep
     user = authenticateUser(dataForm.username, dataForm.password, db)
     if not user:
         raise HTTPException(status_code=401, detail="User not autenticated.")
-    token = createAccessToken(user.username, user.id, timedelta(minutes=20)) # creamos un token
+    token = createAccessToken(user.username, user.id, user.role, timedelta(minutes=20)) # creamos un token
     return {"access_token": token, "token_type": "bearer"} # seguimos la estructura del modelo de respuesta
