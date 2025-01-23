@@ -1,0 +1,6 @@
+Todo: implementar una base de produccion
+    - conectar con contenedor mysql
+Todo: implementar migraciones
+    - implementar migraciones con alembic
+Todo: seguridad
+    - utilizar variables de entorno para mayor seguridad

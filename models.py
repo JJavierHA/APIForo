@@ -6,12 +6,12 @@ class User(base):
     __tablename__ = 'users' # especificamos el nombre de la tabla
     # especificamos los datos
     id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, unique=True)
-    hashedPassword = Column(String)
-    nombre = Column(String)
-    apellido = Column(String)
-    email = Column(String, unique=True)
-    role = Column(String)
+    username = Column(String(50), unique=True, )
+    hashedPassword = Column(String(200))
+    nombre = Column(String(50))
+    apellido = Column(String(50))
+    email = Column(String(50), unique=True)
+    role = Column(String(50))
     isActive = Column(Boolean, default=True)
 
 
@@ -20,8 +20,8 @@ class Topic(base):
     __tablename__ = 'topics' # especificamos el nombre de la tabla
     # especificamos los datos
     id = Column(Integer, primary_key=True, index=True, autoincrement=True)
-    titulo = Column(String)
-    mensaje = Column(String)
+    titulo = Column(String(50))
+    mensaje = Column(String(200))
     fechaCreacion = Column(Integer)
     status = Column(Boolean, default=False)
     curso = Column(Integer)
