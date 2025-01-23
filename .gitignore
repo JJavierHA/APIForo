@@ -8,3 +8,5 @@ Foro.db
 __pycache__/
 *.pyc
 *.pyo
+# otros 
+todo.txt
