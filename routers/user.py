@@ -33,6 +33,9 @@ class ChangePassword(BaseModel):
     newPassword: str
     oldPassword: str
 
+class ChangePhoneNumber(BaseModel):
+    phone: str
+
 # funcion para visualizar los datos del usuario
 @router.get("/", status_code=status.HTTP_200_OK)
 async def user(user: user_dependency, db: db_dependency):
@@ -53,4 +56,13 @@ async def changePassword(user: user_dependency, db: db_dependency,
     userData.hashedPassword = bcrypt_context.hash(changePassword.newPassword)
     db.add(userData)
     db.commit() # guarsamos los cambios
+
+@router.put("/changePhoneNumber/{phoneNumber}", status_code=status.HTTP_204_NO_CONTENT)
+async def changePhoneNumber(user: user_dependency, db: db_dependency, phoneNumber: str):
+    if user is None:
+        raise HTTPException(status_code=401, detail="Authenticated fail.")
+    userData = db.query(User).filter(User.id == user.get('id')).first()
+    userData.phone = phoneNumber
+    db.add(userData)
+    db.commit() # guardamos los cambios en la base de datos
     

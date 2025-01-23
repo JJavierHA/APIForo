@@ -13,6 +13,7 @@ class User(base):
     email = Column(String(50), unique=True)
     role = Column(String(50))
     isActive = Column(Boolean, default=True)
+    phone = Column(String(10))
 
 
 # creamos el modelo de la base de datos

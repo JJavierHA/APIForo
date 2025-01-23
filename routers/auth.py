@@ -45,6 +45,7 @@ class UserRequest(BaseModel):
     apellido: str
     email: str
     role: str
+    phone: str
 
 # establecemos el modelo que sera base para la devolucion de servidor
 class Token(BaseModel):
@@ -96,7 +97,8 @@ async def createUser(db: db_dependency, userRequest: UserRequest):
         nombre=userRequest.nombre,
         apellido=userRequest.apellido,
         email=userRequest.email,
-        role=userRequest.role
+        role=userRequest.role,
+        phone=userRequest.phone,
     )
     db.add(user)
     db.commit()
