@@ -1,0 +1,31 @@
+# docker compose para produccion
+services:
+  delfin:
+    image: mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=josejavier14
+      - MYSQL_DATABASE=foro
+    volumes:
+      - /var/lib/mysql
+    # # especificamos el estado de salud
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-pjosejavier14"]
+      interval: 10s # tiempo entre pruebas
+      timeout: 5s # tiempo de espera para la prueba
+      retries: 5 # Nuemero de intentos antes de fallar
+      start_period: 30s # tiempo de espera antes de ejeccutar la primera prueba
+  foro_api:
+    depends_on:
+      delfin:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile.dev #! especificamos la ruta del dockerfile de desarrollo
+    ports:
+      - "8000:8000"
+    volumes: #! volumen anonimo
+      - .:/home/app/
+    links:
+      - delfin
