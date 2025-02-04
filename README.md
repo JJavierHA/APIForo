@@ -23,8 +23,7 @@ git clone git@github.com:JJavierHA/APIForo.git
 git clone https://github.com/JJavierHA/APIForo.git
 ```
 > **Nota: Usa python o python3 dependiendo de tu sistema operativo**
-#
-#
+
 Dentro del proyecto raiz abre una terminal y crea un entorno virtual con el siguiente comando:
 Activa el entorno virtual.
 ``` bash
