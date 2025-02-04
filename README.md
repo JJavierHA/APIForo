@@ -1,9 +1,7 @@
 # Foro
----
 El proyecto es una **API REST** sencilla que efectual el funcionamiento de un foro de discusion tipico. Se trata de una herramienta de gestión del tiempo que ayuda a organizar el trabajo o la vida personal. Un foro es un espacio de reunión donde se discuten temas de interés común. Puede ser un lugar físico o virtual, y se utiliza para intercambiar opiniones, preguntas, experiencias, y habilidades. 
 
 ## Comenzando 🚀
----
 A continuacion se declaran las instrucciones te permitiran poder replicar el proyecto en tu maquina local con la finalidad de desarrollo y pruebas.
 
 ### Pre-requisitos 📋
@@ -48,7 +46,6 @@ pip install -r requirements.txt
 Configura el archivo **.env.template** de acuerdo a las instrucciones en su interior
 
 ## Despliegue 📦
----
 Para el despliegue de este proyecto se requiere de docker o docker hub segun sea el caso, con la finalidad de poner en marcha los contenedores y ver el correcto funcionamiento del proyecto.
 
 El archivo cuenta con los documentos:
