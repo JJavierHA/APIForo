@@ -5,13 +5,13 @@ services:
     ports:
       - "3306:3306"
     environment:
-      - MYSQL_ROOT_PASSWORD=josejavier14
-      - MYSQL_DATABASE=foro
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE}
     volumes:
       - /var/lib/mysql
     # # especificamos el estado de salud
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-pjosejavier14"]
+      test: ["CMD-SHELL", "mysqladmin ping -h 127.0.0.1 -p$MYSQL_ROOT_PASSWORD"]
       interval: 10s # tiempo entre pruebas
       timeout: 5s # tiempo de espera para la prueba
       retries: 5 # Nuemero de intentos antes de fallar

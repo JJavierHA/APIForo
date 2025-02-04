@@ -1,5 +1,6 @@
 # ignoramos el entorno virtual
 env
+venv
 # las variables de entorno
 .env
 # base de datos
