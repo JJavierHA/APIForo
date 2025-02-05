@@ -39,7 +39,7 @@ venv\Scripst\activate # para windows
 ``` bash
 source venv/bin/activate # linux
 ```
-Instalas las dependencias del proyecto con el comando:
+Instala las dependencias del proyecto con el comando:
 
 Esto instalara en tu entorno entorno virtual las dependencias para que el proyecto funcione correctamente.
 ``` bash
@@ -54,20 +54,28 @@ Selecciona el interprete en el ide de tu preferencia si es necesario, selecciona
 Para el despliegue de este proyecto se requiere de docker o docker hub segun sea el caso, con la finalidad de poner en marcha los contenedores y ver el correcto funcionamiento del proyecto.
 
 El archivo cuenta con los documentos:
-* **docker-compose.yml** Para el levnatamiento de la aplicacion en produccion.
+* **docker-compose.yml** Para el levatamiento de la aplicacion en produccion.
 * **docker-compose-dev.yml** Para el levantamiento del proyecto en desarrollo.
+
+**Importante:** revisa que el puerto 3306 de tu equipo no este ocupado, ya que esto puede ocacionar problemas en el deploy del proyecto.
 
 #### Pasos para levantar la aplicacion en produccion (terminada)
 ``` bash
-docker compose up --build
+docker compose up --build # docker
+```
+``` bash
+docker-compose up --build # docker hub
 ```
 #### Pasos para levantar la aplicacion en desarrollo
 ``` bash
 docker compose -f docker-compose-dev.yml up --build
 ```
-Nota: deberas ver los logs de los contenedores en tu terminal, lo cual es senial de que todo a salido bien.
+``` bash
+docker-compose -f docker-compose-dev.yml up --build
+```
+Nota: deberas ver los logs de los contenedores en tu terminal, lo cual es señal de que todo a salido bien.
 
-**Extra:** Ejecuta el siguiente comando para ver los contenedores activos. Deberias ver los contenedores de la aplicacion en funcionamiento
+**Extra:** En una nueva terminal ejecuta el siguiente comando para ver los contenedores activos. Deberias ver los contenedores de la aplicacion en funcionamiento.
 ``` bash
 docker ps
 ```
@@ -78,11 +86,11 @@ Deverias ver algo similar
 | Up 52 seconds (healthy) | 0.0.0.0:3306->3306/tcp, :::3306->3306/tcp, 33060/tcp   | apiforo-delfin-1   |
 
 #### Funcionamiento:
-Dirigete a tu navegador y escribe la siguiente direccion:
-
-FastAPI-Swagger UI: [Auto documentacion](http://localhost:8000/docs)
+Dirigete a tu navegador y escribe la siguiente direccion: http://localhost:8000/docs
 
 Podras ver la documentacion auto generada por fastAPI
+
+FastAPI-Swagger UI: [Auto documentacion](http://localhost:8000/docs)
 
 ## Construido con 🛠️
 
