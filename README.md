@@ -48,6 +48,8 @@ pip install -r requirements.txt
  **Importante:**
 Configura el archivo **.env.template** de acuerdo a las instrucciones en su interior
 
+Selecciona el interprete en el ide de tu preferencia si es necesario, selecciona el correspondiente al archivo venv
+
 ## Despliegue 📦
 Para el despliegue de este proyecto se requiere de docker o docker hub segun sea el caso, con la finalidad de poner en marcha los contenedores y ver el correcto funcionamiento del proyecto.
 
