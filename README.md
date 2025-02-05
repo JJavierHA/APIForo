@@ -24,7 +24,8 @@ git clone git@github.com:JJavierHA/APIForo.git
 ``` bash
 git clone https://github.com/JJavierHA/APIForo.git
 ```
-> **Nota: Usa python o python3 dependiendo de tu sistema operativo**
+> [!NOTE]
+> Usa python o python3 dependiendo de tu sistema operativo**
 
 Dentro del proyecto raiz abre una terminal y crea un entorno virtual con el siguiente comando:
 
@@ -45,8 +46,6 @@ Esto instalara en tu entorno entorno virtual las dependencias para que el proyec
 ``` bash
 pip install -r requirements.txt
 ```
- **Importante:**
-Configura el archivo **.env.template** de acuerdo a las instrucciones en su interior
 
 Selecciona el interprete en el ide de tu preferencia si es necesario, selecciona el correspondiente al archivo venv
 
@@ -57,7 +56,10 @@ El archivo cuenta con los documentos:
 * **docker-compose.yml** Para el levatamiento de la aplicacion en produccion.
 * **docker-compose-dev.yml** Para el levantamiento del proyecto en desarrollo.
 
-**Importante:** revisa que el puerto 3306 de tu equipo no este ocupado, ya que esto puede ocacionar problemas en el deploy del proyecto.
+> [!IMPORTANT]
+> * Revisa que el puerto 3306 de tu equipo no este ocupado, ya que esto puede ocacionar problemas en el deploy del proyecto.
+> 
+> * Configura el archivo **.env.template** de acuerdo a las instrucciones en su interior
 
 #### Pasos para levantar la aplicacion en produccion (terminada)
 ``` bash
@@ -73,7 +75,8 @@ docker compose -f docker-compose-dev.yml up --build
 ``` bash
 docker-compose -f docker-compose-dev.yml up --build
 ```
-Nota: deberas ver los logs de los contenedores en tu terminal, lo cual es señal de que todo a salido bien.
+> [!NOTE]
+> Deberas ver los logs de los contenedores en tu terminal, lo cual es señal de que todo a salido bien.
 
 **Extra:** En una nueva terminal ejecuta el siguiente comando para ver los contenedores activos. Deberias ver los contenedores de la aplicacion en funcionamiento.
 ``` bash
@@ -88,22 +91,35 @@ Deverias ver algo similar
 #### Funcionamiento:
 Dirigete a tu navegador y escribe la siguiente direccion: http://localhost:8000/docs
 
-Podras ver la documentacion auto generada por fastAPI
+Podras ver la documentacion auto generada por FastAPI-Swagger UI: [Auto documentacion](http://localhost:8000/docs)
 
-FastAPI-Swagger UI: [Auto documentacion](http://localhost:8000/docs)
+![Image](https://github.com/user-attachments/assets/238bfb20-e51b-42bc-a783-00a6a2274d17)
+
+Crea un usuario para poder hacer uso de los demas endpoints
+1. Desglosa el endpoint.
+2. Remplaza los datos en el json (Coloca admin en el campo role para usar las opciones de admin).
+3. Ejecuta el endpoint.
+
+![Image](https://github.com/user-attachments/assets/acd4354c-fd1f-4ef4-a7e1-b674731b996a)
+
+
+Autentica el usuario
+1. Presiona AUTHORIZE.
+2. Ingresa tus credenciales.
+3. Presiona AUTHORIZE. 
+
+![Image](https://github.com/user-attachments/assets/ce5112fe-15b8-4881-bb55-234cb7c65aae)
+
+![Image](https://github.com/user-attachments/assets/6bc2fbc5-e727-4c33-8ce3-9019ffac2709)
+
+Ahora puedes usar los distindos enpoints 😉
 
 ## Construido con 🛠️
 
-_Menciona las herramientas que utilizaste para crear tu proyecto_
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
+* [FastAPI](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
+* [Docker](https://maven.apache.org/) - Contenerizador de aplicaciones
 
 
 ## Autores ✒️
 
-_Menciona a todos aquellos que ayudaron a levantar el proyecto desde sus inicios_
-
-* **Andrés Villanueva** - *Trabajo Inicial* - [villanuevand](https://github.com/villanuevand)
-* **Fulanito Detal** - *Documentación* - [fulanitodetal](#fulanito-de-tal)
+* **Jose Javier Herrera Arguello** - *Trabajo Inicial* - [JJavierHA](https://github.com/JJavierHA)
